@@ -29,7 +29,7 @@ pday = past.strftime("%#d")
 pmonth = past.strftime("%m")
 pmonth_short = past.strftime("%b")
 pyear = past.strftime("%G")
-today = str(pday + " " + pmonth_short + " " + pyear)
+pdate = str(pday + " " + pmonth_short + " " + pyear)
 
 url = ("https://api2.sgx.com/sites/default/files/" + year + "-" + month + "/SGX Fund Flow Weekly Tracker %28Week of " + pday + " " + pmonth_short + " " + pyear + "%29.xlsx")
 excel = "SGX Fund Flow Weekly Tracker (Week of " + pday + " " + pmonth_short + " " + pyear + ").xlsx"
@@ -50,7 +50,7 @@ with open(txt, newline='') as csvfile:
     stats = csv.reader(csvfile, delimiter=',')
     rows = list(stats)
     for x in range(len(rows)):
-        rows[x].append(today)
+        rows[x].append(pdate)
         con.execute("INSERT INTO Stocks (Company, Stock_Code, Institution, Retail, Date_Added) VALUES (?, ?, ?, ?, ?)", (rows[x][0], rows[x][1], rows[x][2], rows[x][3], rows[x][4]))
 con.commit()
 con.close()
