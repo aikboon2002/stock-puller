@@ -22,7 +22,6 @@ day = counter.strftime("%d")
 month = counter.strftime("%m")
 month_short = counter.strftime("%b")
 year = counter.strftime("%G")
-today = str(day + " " + month_short + " " + year)
 
 # 7 days ago
 past = datetime.datetime.now() - datetime.timedelta(days=7)
@@ -30,8 +29,9 @@ pday = past.strftime("%#d")
 pmonth = past.strftime("%m")
 pmonth_short = past.strftime("%b")
 pyear = past.strftime("%G")
+today = str(pday + " " + pmonth_short + " " + pyear)
 
-url = ("https://api2.sgx.com/sites/default/files/" + year + "-" + month + "/SGX Fund Flow Weekly Tracker %28Week of " + pday + " " + pmonth_short + " " + year + "%29.xlsx")
+url = ("https://api2.sgx.com/sites/default/files/" + year + "-" + month + "/SGX Fund Flow Weekly Tracker %28Week of " + pday + " " + pmonth_short + " " + pyear + "%29.xlsx")
 excel = "SGX Fund Flow Weekly Tracker (Week of " + pday + " " + pmonth_short + " " + pyear + ").xlsx"
 txt = "SGX Fund Flow Weekly Tracker (Week of " + pday + " " + pmonth_short + " " + pyear + ").csv"
 
