@@ -27,11 +27,13 @@ print("""This program queries relevant information according to your input.
 Enter the name of the company below to view their respective information.""")
 while True:
     y = 0
+    num = 1
     for x in counters:
-        print(str(y) + ". " + x)
+        print(str(num) + ". " + x)
         numbers.append(y)
+        num += 1
         y += 1
-    entry = int(input("Enter the number of the company you wish to query: "))
+    entry = int(input("Enter the number of the company you wish to query: ")) - 1
     if isinstance(entry, int) and entry in numbers:
         query = counters[entry]
         dateprompt = input("Any specified dates (Y / N)? ").upper()
