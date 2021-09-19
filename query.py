@@ -17,21 +17,28 @@ def validate(date_text):
 
 all_names = []
 counters = []
+numbers = []
 
 for row in stash:
     all_names.append(row[0])
     [counters.append(x) for x in all_names if x not in counters]
-        
+
 print("""This program queries relevant information according to your input. 
 Enter the name of the company below to view their respective information.""")
 while True:
-    entry = input("Enter company name: ")
-    if entry.isalpha() and entry in counters:
+    y = 0
+    for x in counters:
+        print(str(y) + ". " + x)
+        numbers.append(y)
+        y += 1
+    entry = int(input("Enter the number of the company you wish to query: "))
+    if isinstance(entry, int) and entry in numbers:
+        query = counters[entry]
         dateprompt = input("Any specified dates (Y / N)? ").upper()
         if dateprompt == 'N':
             fetch = "SELECT * FROM Stocks WHERE company = ?"
             catch = []
-            for row in cur.execute(fetch, (entry,)):
+            for row in cur.execute(fetch, (query,)):
                 catch.append(row)
             df = pd.DataFrame(catch, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
             df.plot(x = 'Date Added', y = ['Institution', 'Retail'], kind="bar")
@@ -41,6 +48,7 @@ while True:
                 print("Program closed.")
                 break          
         elif dateprompt == 'Y':
+            query = counters[entry]
             while True: 
                 startdate = input("Please enter starting date (YYYY-MM-DD): ")
                 validate(startdate)
@@ -61,7 +69,7 @@ while True:
                         catchdate.append(row)
                     fetchname = "SELECT * FROM Stocks WHERE company = ?"
                     catchname = []
-                    for row in cur.execute(fetchname, (entry,)):
+                    for row in cur.execute(fetchname, (query,)):
                         catchname.append(row)
                     result = set(catchname).intersection(catchdate)
                     df = pd.DataFrame(result, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
