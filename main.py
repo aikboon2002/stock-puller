@@ -1,4 +1,3 @@
-from types import ModuleType
 import pandas as pd
 import requests
 import sqlite3 as sl
@@ -24,9 +23,18 @@ month_short = counter.strftime("%b")
 year = counter.strftime("%G")
 today = str(day + " " + month_short + " " + year)
 
-url = ("https://api2.sgx.com/sites/default/files/" + year + "-" + month + "/SGX Fund Flow Weekly Tracker %28Week of " + day + " " + month_short + " " + year + "%29.xlsx")
-excel = "SGX Fund Flow Weekly Tracker (Week of " + day + " " + month_short + " " + year + ").xlsx"
-txt = "SGX Fund Flow Weekly Tracker (Week of " + day + " " + month_short + " " + year + ").csv"
+# 7 days ago
+past = datetime.datetime.now() - datetime.timedelta(days=7)
+pday = past.strftime("%#d")
+paddedpday = past.strftime("%d")
+pmonth = past.strftime("%m")
+pmonth_short = past.strftime("%b")
+pyear = past.strftime("%G")
+pdate = str(pyear + "-" + pmonth + "-" + paddedpday)
+
+url = ("https://api2.sgx.com/sites/default/files/" + year + "-" + month + "/SGX Fund Flow Weekly Tracker %28Week of " + pday + " " + pmonth_short + " " + pyear + "%29.xlsx")
+excel = "SGX Fund Flow Weekly Tracker (Week of " + pday + " " + pmonth_short + " " + pyear + ").xlsx"
+txt = "SGX Fund Flow Weekly Tracker (Week of " + pday + " " + pmonth_short + " " + pyear + ").csv"
 
 try:
     dl = requests.get(url)
