@@ -51,7 +51,7 @@ with open(txt, newline='') as csvfile:
     stats = csv.reader(csvfile, delimiter=',')
     rows = list(stats)
     for x in range(len(rows)):
-        rows[x].append(today)
+        rows[x].append(pdate)
         con.execute("INSERT INTO Stocks (Company, Stock_Code, Institution, Retail, Date_Added) VALUES (?, ?, ?, ?, ?)", (rows[x][0], rows[x][1], rows[x][2], rows[x][3], rows[x][4]))
 con.commit()
 con.close()
