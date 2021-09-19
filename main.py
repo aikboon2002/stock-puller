@@ -16,12 +16,12 @@ con.execute('''CREATE TABLE IF NOT EXISTS Stocks (
             ID INTEGER PRIMARY KEY AUTOINCREMENT
         ); ''')
 
+# Today's date
 counter = datetime.datetime.now()
 day = counter.strftime("%d")
 month = counter.strftime("%m")
 month_short = counter.strftime("%b")
 year = counter.strftime("%G")
-today = str(day + " " + month_short + " " + year)
 
 # 7 days ago
 past = datetime.datetime.now() - datetime.timedelta(days=7)
