@@ -43,7 +43,9 @@ while True:
             for row in cur.execute(fetch, (query,)):
                 catch.append(row)
             df = pd.DataFrame(catch, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
-            df.plot(x = 'Date Added', y = ['Institution', 'Retail'], kind="bar")
+            ax = df.plot(stacked=True, color=['C2','C3'], x = 'Date Added', y = ['Institution', 'Retail'], kind="bar", title=query, xlabel="Date", ylabel="Vol (millions)")
+            for container in ax.containers:
+                ax.bar_label(container)
             plt.show()
             retry = input("Would you like to search for another company (Y / N)? ").upper()
             if retry.isalpha() and retry == "N":
@@ -75,7 +77,9 @@ while True:
                         catchname.append(row)
                     result = set(catchname).intersection(catchdate)
                     df = pd.DataFrame(result, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
-                    df.plot(x = 'Date Added', y = ['Institution', 'Retail'], kind="bar")
+                    ax = df.plot(stacked=True, color=['C2','C3'], x = 'Date Added', y = ['Institution', 'Retail'], kind="bar", title=query, xlabel="Date", ylabel="Vol (millions)")
+                    for container in ax.containers:
+                        ax.bar_label(container)
                     plt.show()
                     break
             retry = input("Would you like to search for another company (Y / N)? ").upper()
