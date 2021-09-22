@@ -5,11 +5,11 @@ import csv
 import datetime
 import os
 import glob
-import re
 from datetime import date
 from dateutil.relativedelta import relativedelta, MO
 
 # Note: This script will delete all existing data in your existing database
+#       This script should run once if you are populating a new db
 
 # Number of weeks of historical data to pull from SGX
 history_loop_count = 26
@@ -60,7 +60,8 @@ for i in range(history_loop_count):
     else:
         with open(excel, 'wb') as output:
             output.write(dl.content)
-        
+
+    # Parse Weekly STI constituents tab for STI index stocks        
     read = pd.read_excel(excel, sheet_name='STI Constituents', header=1, skipfooter=8)
     read.to_csv(txt, index=None, header=True)
     with open(txt, newline='') as csvfile:
@@ -115,4 +116,3 @@ for f in files:
         #print ("Removed", f)
     except OSError as e:
         print("Error: %s : %s" % (f, e.strerror))
-
