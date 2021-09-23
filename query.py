@@ -2,6 +2,17 @@ import sqlite3 as sl
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
+from os import system, name
+
+# define our clear function
+def clear(): 
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+  
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
 
 con = sl.connect('fund-flow.db')
 cur = con.cursor()
@@ -23,9 +34,10 @@ for row in stash:
     all_names.append(row[0])
     [counters.append(x) for x in all_names if x not in counters]
 
-print("""This program queries relevant information according to your input. 
-Enter the name of the company below to view their respective information.""")
 while True:
+    clear()
+    print("""This program queries relevant information according to your input. 
+    Enter the name of the company below to view their respective information.""")
     y = 0
     num = 1
     for x in counters:
@@ -33,7 +45,8 @@ while True:
         numbers.append(y)
         num += 1
         y += 1
-    entry = int(input("Enter the number of the company you wish to query: ")) - 1
+    user_input = int(input("Enter the number of the company you wish to query. '0' to exit. "))
+    entry = user_input - 1
     if isinstance(entry, int) and entry in numbers:
         query = counters[entry]
         dateprompt = input("Any specified dates (Y / N)? ").upper()
@@ -45,12 +58,8 @@ while True:
             df = pd.DataFrame(catch, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
             ax = df.plot(stacked=True, color=['C2','C3'], x = 'Date Added', y = ['Institution', 'Retail'], kind="bar", title=query, xlabel="Date", ylabel="Vol (millions)")
             for container in ax.containers:
-                ax.bar_label(container)
-            plt.show()
-            retry = input("Would you like to search for another company (Y / N)? ").upper()
-            if retry.isalpha() and retry == "N":
-                print("Program closed.")
-                break          
+                ax.bar_label(container,fmt='%.1f')
+            plt.show()        
         elif dateprompt == 'Y':
             query = counters[entry]
             while True: 
@@ -82,11 +91,9 @@ while True:
                         ax.bar_label(container)
                     plt.show()
                     break
-            retry = input("Would you like to search for another company (Y / N)? ").upper()
-            if retry.isalpha() and retry == "N":
-                print("Program closed.")
-                break   
         else:
             print("Please enter either Y or N! Try again!")
+    elif user_input == 0:
+            break
     else:
         print("Company is not found within the database. Please try again.")
