@@ -1,3 +1,4 @@
-cd C:\Users\nicht\Documents\GitHub\Stock-Puller\
+D:
+cd D:\My_Projects\Python\Stock-Puller\
 python.exe main.py
 pause

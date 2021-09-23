@@ -2,6 +2,7 @@ import sqlite3 as sl
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
+from dateutil.relativedelta import relativedelta, MO
 from os import system, name
 
 # define our clear function
@@ -88,11 +89,21 @@ while True:
                     df = pd.DataFrame(result, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
                     ax = df.plot(stacked=True, color=['C2','C3'], x = 'Date Added', y = ['Institution', 'Retail'], kind="bar", title=query, xlabel="Date", ylabel="Vol (millions)")
                     for container in ax.containers:
-                        ax.bar_label(container)
+                        ax.bar_label(container,fmt='%.1f')
                     plt.show()
                     break
         else:
             print("Please enter either Y or N! Try again!")
+    elif user_input == 999:
+        last_monday = datetime.datetime.now() + relativedelta(weekday=MO(-2))
+        last_monday_date = str(last_monday.strftime("%G") + "-" + last_monday.strftime("%m") + "-" + last_monday.strftime("%d"))       
+        fetchdate = cur.execute("SELECT * FROM Stocks WHERE Date_Added = ?", (last_monday_date,))
+        last_monday_date = "SGX Fund Flow " + last_monday_date
+        df = pd.DataFrame(fetchdate, columns = ['Company', 'Stock Code', 'Institution', 'Retail', 'Date Added', 'ID'])
+        ax = df.plot(stacked=True, color=['C2','C3'], x = 'Company', y = ['Institution', 'Retail'], kind="bar", title=last_monday_date, xlabel="Company", ylabel="Vol (millions)")
+        for container in ax.containers:
+            ax.bar_label(container,fmt='%.1f')
+        plt.show()
     elif user_input == 0:
             break
     else:
