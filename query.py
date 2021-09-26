@@ -27,6 +27,27 @@ def validate(date_text):
     except ValueError:
         raise ValueError("Incorrect data format, should be YYYY-MM-DD") from None
 
+
+def weeklydata(a, b):
+    date = datetime.datetime.now() + relativedelta(weekday=MO(a))
+    prevdate = str(date.strftime("%G") + "-" + date.strftime("%m") + "-" + date.strftime("%d"))
+    for row in cur.execute("SELECT Institution, Company FROM Stocks WHERE Date_Added = ?", (prevdate,)):
+        if row[0] > 0:
+            b.append(row[1])
+            b.append(row[0])
+    print(prevdate)
+    #print(b)
+    return b
+
+
+def compiledata(a, b):
+    for row in cur.execute("SELECT Company FROM Stocks"):
+            if row[0] in a:
+                b.append(row[0])
+    b = set(b)
+    return b
+
+
 all_names = []
 counters = []
 numbers = []
@@ -94,6 +115,27 @@ while True:
                     break
         else:
             print("Please enter either Y or N! Try again!")
+    
+    elif user_input == 888:
+        d = {}
+        sets = []
+        entry = int(input("Number of weeks to query: "))
+        if isinstance(entry, int):
+            for x in range(2, entry+2):
+                d["data{0}".format(x)] = []
+                d["results{0}".format(x)] = []
+                d["product{0}".format(x)] = weeklydata(-x, d["data"+str(x)])
+                d["var{0}".format(x)] = compiledata(d["product"+str(x)], d["results"+str(x)])
+                sets.append(d["var{0}".format(x)])
+            var = set.intersection(*sets)
+            if len(var) == 0:
+                print("No patterns found.")
+            else:
+                print(var)
+            break
+        else:
+            print("Please input a number!")
+    
     elif user_input == 999:
         last_monday = datetime.datetime.now() + relativedelta(weekday=MO(-2))
         last_monday_date = str(last_monday.strftime("%G") + "-" + last_monday.strftime("%m") + "-" + last_monday.strftime("%d"))       
