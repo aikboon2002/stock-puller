@@ -36,7 +36,7 @@ def weeklydata(a, b):
             b.append(row[1])
             b.append(row[0])
     print(prevdate)
-    print(b)
+    #print(b)
     return b
 
 
@@ -128,7 +128,10 @@ while True:
                 d["var{0}".format(x)] = compiledata(d["product"+str(x)], d["results"+str(x)])
                 sets.append(d["var{0}".format(x)])
             var = set.intersection(*sets)
-            print(var)
+            if len(var) == 0:
+                print("No patterns found.")
+            else:
+                print(var)
             break
         else:
             print("Please input a number!")
