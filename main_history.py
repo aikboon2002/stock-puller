@@ -33,7 +33,10 @@ last_monday = last_monday + relativedelta(weekday=MO(-history_loop_count))
 for i in range(history_loop_count):
     day = last_monday.strftime("%d")
     month = last_monday.strftime("%m")
-    month_short = last_monday.strftime("%b")
+    if last_monday.month>=6 and last_monday.year>=2022:
+        month_short = last_monday.strftime("%B")
+    else:
+        month_short = last_monday.strftime("%b")
     year = last_monday.strftime("%G")
 
     # 7 days ago
@@ -41,7 +44,10 @@ for i in range(history_loop_count):
     pday = past.strftime("%#d")
     paddedpday = past.strftime("%d")
     pmonth = past.strftime("%m")
-    pmonth_short = past.strftime("%b")
+    if past.month>=6 and past.year>=2022:
+        pmonth_short = past.strftime("%B")
+    else:
+        pmonth_short = past.strftime("%b")
     pyear = past.strftime("%G")
     pdate = str(pyear + "-" + pmonth + "-" + paddedpday)
 
