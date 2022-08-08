@@ -23,7 +23,7 @@ con.execute('''CREATE TABLE IF NOT EXISTS Stocks (
 counter = datetime.datetime.now() + relativedelta(weekday=MO(-1))
 day = counter.strftime("%d")
 month = counter.strftime("%m")
-month_short = counter.strftime("%B")
+month_short = counter.strftime("%b")
 year = counter.strftime("%G")
 
 # 7 days ago
@@ -31,7 +31,7 @@ past = counter - datetime.timedelta(days=7)
 pday = past.strftime("%#d")
 paddedpday = past.strftime("%d")
 pmonth = past.strftime("%m")
-pmonth_short = past.strftime("%B")
+pmonth_short = past.strftime("%b")
 pyear = past.strftime("%G")
 pdate = str(pyear + "-" + pmonth + "-" + paddedpday)
 

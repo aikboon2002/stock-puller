@@ -33,7 +33,7 @@ last_monday = last_monday + relativedelta(weekday=MO(-history_loop_count))
 for i in range(history_loop_count):
     day = last_monday.strftime("%d")
     month = last_monday.strftime("%m")
-    if last_monday.month>=6 and last_monday.year>=2022:
+    if (last_monday.month==6 or last_monday.month==7) and last_monday.year==2022:
         month_short = last_monday.strftime("%B")
     else:
         month_short = last_monday.strftime("%b")
