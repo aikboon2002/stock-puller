@@ -45,7 +45,10 @@ for i in range(history_loop_count):
     paddedpday = past.strftime("%d")
     pmonth = past.strftime("%m")
     if past.month>=6 and past.year>=2022:
-        pmonth_short = past.strftime("%B")
+        if past.month==8 or past.month==9 or past.month==10:
+            pmonth_short = past.strftime("%b")
+        else:
+            pmonth_short = past.strftime("%B")
     else:
         pmonth_short = past.strftime("%b")
     pyear = past.strftime("%G")
