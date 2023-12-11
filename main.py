@@ -31,7 +31,7 @@ past = counter - datetime.timedelta(days=7)
 pday = past.strftime("%#d")
 paddedpday = past.strftime("%d")
 pmonth = past.strftime("%m")
-pmonth_short = past.strftime("%B")
+pmonth_short = past.strftime("%b")
 pyear = past.strftime("%G")
 pdate = str(pyear + "-" + pmonth + "-" + paddedpday)
 
