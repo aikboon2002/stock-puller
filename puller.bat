@@ -1,4 +1,3 @@
-D:
-cd D:\My_Projects\Python\Stock-Puller\
+cd c:\Python\stock-puller-clone
 python.exe main.py
 pause
